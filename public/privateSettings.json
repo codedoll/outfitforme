@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "outfitformeanalytics",
+  "private_key_id": "b0c95462a55536be2d2de52b92acd7e96229fa0f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDCETO0q1GQtU7g\nF3B/y4jCkm2AEA4wTD23vz7mWjDk6kDnBBAKKawi8KDnRk/ew261vFWcLUWKdIDx\nsOYX4Ae5VdRngate7A6krC78MetK6Ge4leg/izU3CyJBVLHmGWYsPxtU6yh8c5fG\nBzex5t447ycvakmmt04usdmO79pQ0Q9wwPtYap9rvutNk/6jNVzWuJ2tG31F4k+o\nWxE2ANBrdzV+lMqOUO/+aUeu3C3/haK0NvnC6Rxwpysv71/jmW/MefYMjNXeCH2e\n9jSRnBgLGSNICpj1W25eGoB4kxM8+klPEfP0tqIw0CHz7VerIVOV+fzCW1rbfX6k\nLdcGy55ZAgMBAAECggEBAIspMK2miAe/q77PsBFDz17PB4xkdvg1Q7CGiEFAfX05\naa7+382Z0mD/sjIF3nI8LCBP3AfxAsPlBS3LD0QhlwhUvso2Vr/rgBifi9W2qiX9\n/5qCjJc8aL1+02KLrEH3BqhF3ICJXG/ZqAUN2edNSR8Eh1Hd4tCU85BSYlK4NhHq\nhp8pTvdnek8NXf7bCOY8hekJgH4OwI4mWcHCOS+tn/JZPP1uHExCC72NrfN/5A+e\nNIkUYooyY9Nb3JjY8zz63NxzvaWliF9+qHVegD4hLx5tbXBNAzyzM+FAAaWLmM8x\n2olUJ0j7NIUDB51UF2ubgMegOdoL4uYJYw722+GY4V0CgYEA+GfrfSFweFroIbrC\nAkBUyJVwfiLGanQLj4gR+F4eMCXvDlxccJEWdbSyQ+CpJzml6UM83bl2kB5RsWcX\nMNqIFaXjBe7pr+Dm94we00DDKl9r8UNoCB2iRcXdSOKzQcCf+DA9Mor/iTnC73Lf\nV0EV83aFOrSwIEikwMpbJr29smcCgYEAyAAD2BqKFGDbgpDLLZBT9Z5agr1cs7QQ\nX5vTs2AWW0OlYxx4+xaViquhIUT4NqGEQEHV8kYosqEHT7dI2Jzs+bEvKMLUD3VP\noXO3yC5MNy9rLHwriDA2tPG1KIU5yncXq2eJ/2dLPfDT4F80yzjdp0gKAia9Oi6M\nO4aQyXXxMT8CgYAoj2dfNi+UJ1vR7hmxnml5mxUUM39scGhW1mQAxvVs7TS8ho49\nfyNIsumMtclI81vI28a7eYYHgDvcmLWrr3Ma/cw08s7LfhCYiRObcO6tI4mPim8Z\nLCWL+QPp28JjUR2Nu+qyLwoMkRboXDxlleYMq+STMl+z1ci5BhGeIMsxrwKBgHwD\nLl8Ijcf3CwWZvLJjBPyPFTZuLpYrN9/g4tMd6J7sghfDpuyiY1WZ+I6FkpdlbXje\nmcfhYwjoOn1ee+f83iAxkrlmnVF8f0TwWOvicVXirEToNaH7q2BlY9xdR6lYUS/y\nQqpApXIh6277+eNtPlukmrgcx0bVaBTc6thQrp7HAoGBAJFcS7IUPcDuMiISSOXA\n+/mUKlSpXHiw3iFpv3NU0MQupIjwgQ9PqWbNXNB5f9Qqmrw+lCCf+ydckX0EmnF2\n3rPfWZ1VUZdU+9efHTSY4liHP329/lH1m+veL5BLn1lRdQNEzUBzMs9jtYWAR0JR\nnw+k/iS8+MatJdINTyAcNcft\n-----END PRIVATE KEY-----\n",
+  "client_email": "outfitformeanalytics@appspot.gserviceaccount.com",
+  "client_id": "115153388428957254186",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/outfitformeanalytics%40appspot.gserviceaccount.com"
+}
