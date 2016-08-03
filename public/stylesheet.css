@@ -31,6 +31,8 @@
   display: -moz-flex;
   display: -webkit-flex;
   display: flex;
+  justify-content: center;
+
 }
 
 .wrap {
@@ -39,17 +41,7 @@
 }
 
 .flex-item {
-/*  background: tomato;
-  padding: 5px;
-  width: 100px;
-  height: 100px;
-  margin: 10px;
-  
-  line-height: 100px;
-  color: white;
-  font-weight: bold;
-  font-size: 2em;
-  text-align: center;*/
+  width: 30%;
 }
 
 h1#sitename {
@@ -76,4 +68,8 @@ a, a :hover {
 
 .flex-item {
     padding: .5em 5em;
+}
+
+canvas#icon1 {
+    width: 2.5em;
 }

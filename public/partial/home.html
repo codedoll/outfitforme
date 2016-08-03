@@ -1,29 +1,26 @@
 <div class="flex-container wrap">
     <div class="flex-item">
         <form ng-submit="mctrl.forecast(userLocation)">
-            zipcode:
+            <span id="whereu">where are you heading?</span>
+            <br>
             <input type="text" ng-model="userLocation.zipcode">
             <br/>
             <button type="submit">submit</button>
         </form>
+
         <!-- {{mctrl.darksky.timezone}} -->
         <!-- <br/> -->
-        {{mctrl.darksky.city}}
+        {{mctrl.darksky.city}} <canvas id="icon1" width="64" height="64"></canvas>
         <br/>
         <!-- <span am-time-ago="message.time"></span> -->
         <span>{{ mctrl.darksky.hourly.summary}}</span>
-        <span am-time-ago="message.text"></span>
+        <span am-time-ago="message.text"></span>   
+
     </div>
     <div class="flex-item">
         <h1>Heys</h1>
     </div>
-        <div class="flex-item">
-        <h1>Heys</h1>
-    </div>
-        <div class="flex-item">
-        <h1>Heys</h1>
-    </div>
-        <div class="flex-item">
+    <div class="flex-item">
         <h1>Heys</h1>
     </div>
 </div>
