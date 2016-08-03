@@ -16,10 +16,10 @@ var OAuth2 = google.auth.OAuth2;
 
 
 // Include envfile 
-var envfile = require('envfile')
-var sourcePath = 'file.env'
-var sourceString = "a=1\nb:2"
-var sourceObject = { a: 1, b: 2 }
+// var envfile = require('envfile')
+// var sourcePath = 'file.env'
+// var sourceString = "a=1\nb:2"
+// var sourceObject = { a: 1, b: 2 }
 
 
 var CLIENT_ID = process.env.CLIENT_ID;
@@ -58,10 +58,10 @@ var authClient = new JWT(
 );
 
 var port = process.env.PORT || 4000
-    // var MONGODBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/forumProj'
+    var MONGODBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/outfitforme'
 var app = express();
 
-// mongoose.connect(MONGODBURI);
+mongoose.connect(MONGODBURI);
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(methodOverride('_method'));
 
