@@ -225,6 +225,10 @@ app.get('/forecast/:id', function(req, res) {
 
 });
 
+app.get('*', function(req, res) {
+    res.redirect('/');
+});
+
 
 mongoose.connection.once('open', function() {
     console.log('connected to mongod');
