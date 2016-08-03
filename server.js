@@ -76,43 +76,43 @@ app.use(bodyParser.json());
 
 
 
-app.get('/analytics', function(req, res) {
+// app.get('/analytics', function(req, res) {
 
-    authClient.authorize(function(err, tokens) {
-        if (err) {
-            // console.log(err);
-            return;
-        }
+//     authClient.authorize(function(err, tokens) {
+//         if (err) {
+//             // console.log(err);
+//             return;
+//         }
 
-        analytics.data.ga.get({
-            auth: authClient,
-            'ids': 'ga:119753868',
-            'start-date': '30daysAgo',
-            'end-date': 'yesterday',
-            'metrics': 'ga:visits'
-        }, function(err, data) {
-            // console.log(err);
-            // console.log(data);
-            res.send(data)
-        });
-
-
-        analytics.data.ga.get({
-            auth: authClient,
-            'ids': 'ga:119753868',
-            'start-date': '30daysAgo',
-            'end-date': 'yesterday',
-            'metrics': 'ga:avgSessionDuration'
-        }, function(err, data) {
-            // console.log(err);
-            // console.log(data);
-            res.send(data)
-        });
+//         analytics.data.ga.get({
+//             auth: authClient,
+//             'ids': 'ga:119753868',
+//             'start-date': '30daysAgo',
+//             'end-date': 'yesterday',
+//             'metrics': 'ga:visits'
+//         }, function(err, data) {
+//             // console.log(err);
+//             // console.log(data);
+//             res.send(data)
+//         });
 
 
-    });
+//         analytics.data.ga.get({
+//             auth: authClient,
+//             'ids': 'ga:119753868',
+//             'start-date': '30daysAgo',
+//             'end-date': 'yesterday',
+//             'metrics': 'ga:avgSessionDuration'
+//         }, function(err, data) {
+//             // console.log(err);
+//             // console.log(data);
+//             res.send(data)
+//         });
 
-})
+
+//     });
+
+// })
 
 // app.get('/analytics', function(req, res) {
 //     // var wordpressPosts = require('wordpress-posts');
