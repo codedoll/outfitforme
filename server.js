@@ -76,8 +76,65 @@ app.use(bodyParser.json());
 
 
 
+app.get('/analytics', function(req, res) {
+
+    authClient.authorize(function(err, tokens) {
+        if (err) {
+            // console.log(err);
+            return;
+        }
+
+        analytics.data.ga.get({
+            auth: authClient,
+            'ids': 'ga:119753868',
+            'start-date': '30daysAgo',
+            'end-date': 'yesterday',
+            'metrics': 'ga:visits'
+        }, function(err, data) {
+            // console.log(err);
+            // console.log(data);
+            res.send(data)
+        });
+
+
+        analytics.data.ga.get({
+            auth: authClient,
+            'ids': 'ga:119753868',
+            'start-date': '30daysAgo',
+            'end-date': 'yesterday',
+            'metrics': 'ga:avgSessionDuration'
+        }, function(err, data) {
+            // console.log(err);
+            // console.log(data);
+            res.send(data)
+        });
+
+
+    });
+
+})
+
 // app.get('/analytics', function(req, res) {
-//     // res.sendFile(path.resolve(__dirname + '/public/index.html'));
+//     // var wordpressPosts = require('wordpress-posts');
+//     // var wordpressSiteUrl = "http://codedoll.com/";
+//     // var posts = 4;
+
+//     // wordpressPosts.get(wordpressSiteUrl, posts, function(err, data) {
+//     //     // console.log(data);
+//     // });
+
+//     var google = require('googleapis');
+//     var OAuth2 = google.auth.OAuth2;
+
+//     var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
+
+//     authClient.authorize(function(err, tokens) {
+//         console.log(tokens.access_token);
+//         res.send(tokens.access_token)
+
+//     });
+
+
 
 //     authClient.authorize(function(err, tokens) {
 //         if (err) {
@@ -104,77 +161,18 @@ app.use(bodyParser.json());
 //             'start-date': '30daysAgo',
 //             'end-date': 'yesterday',
 //             'metrics': 'ga:avgSessionDuration'
-//         }, function(err, data) {
+//         }, function(err, data2) {
 //             // console.log(err);
 //             // console.log(data);
-//             res.send(data)
+//             res.send(data2)
 //         });
 
 
 //     });
 
-// })
-
-app.get('/analytics', function(req, res) {
-    // ar express = require(
-    var wordpressPosts = require('wordpress-posts');
-    var wordpressSiteUrl = "http://codedoll.com/";
-    var posts = 4;
-
-    wordpressPosts.get(wordpressSiteUrl, posts, function(err, data) {
-        // console.log(data);
-    });
-
-    var google = require('googleapis');
-    var OAuth2 = google.auth.OAuth2;
-
-    var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
-
-    authClient.authorize(function(err, tokens) {
-        console.log(tokens.access_token);
-        res.send(tokens.access_token)
-
-    });
 
 
-
-    // authClient.authorize(function(err, tokens) {
-    //     if (err) {
-    //         // console.log(err);
-    //         return;
-    //     }
-
-    //     analytics.data.ga.get({
-    //         auth: authClient,
-    //         'ids': 'ga:119753868',
-    //         'start-date': '30daysAgo',
-    //         'end-date': 'yesterday',
-    //         'metrics': 'ga:visits'
-    //     }, function(err, data) {
-    //         // console.log(err);
-    //         // console.log(data);
-    //         res.send(data)
-    //     });
-
-
-    //     analytics.data.ga.get({
-    //         auth: authClient,
-    //         'ids': 'ga:119753868',
-    //         'start-date': '30daysAgo',
-    //         'end-date': 'yesterday',
-    //         'metrics': 'ga:avgSessionDuration'
-    //     }, function(err, data2) {
-    //         // console.log(err);
-    //         // console.log(data);
-    //         res.send(data2)
-    //     });
-
-
-    // });
-
-
-
-});
+// });
 
 app.get('/forecast', function(req, res) {
     var ForecastIO = require('forecast-io')

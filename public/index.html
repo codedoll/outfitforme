@@ -21,12 +21,12 @@
         <a href="/ga">
         <button 
             ng-href="/ga" 
-            target="_parent" 
             class="btn btn-primary btn">
             admin
         </button>
     </a>
-    <ng-include src="'partial/home.html'"></ng-include>
-</body>
+        <div ng-view>
+            <div ng-include="partial/home.html"></div>
+        </div></body>
 
 </html>
