@@ -13,20 +13,30 @@
     <link href='https://fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/lumen/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <title></title>
 </head>
+<header>
+    <div class="wrapper">
+        <div>
+        <a ng-href="/">
+            <h1 id="sitename"><span class="one">outfit</span><span class="two">for</span><span class="three">me</span></h1>
+        </a>
+        </div>
+
+</header>
 
 <body ng-controller="MainController as mctrl">
-        <a href="/ga">
-        <button 
-            ng-href="/ga" 
-            class="btn btn-primary btn">
+    <a href="/ga">
+        <button ng-href="/ga" class="btn btn-primary btn">
             admin
         </button>
     </a>
-        <div ng-view>
-            <div ng-include="partial/home.html"></div>
-        </div></body>
+    <div ng-view>
+        <div ng-include="partial/home.html"></div>
+    </div>
+</body>
 
 </html>
