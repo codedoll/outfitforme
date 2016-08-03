@@ -10,23 +10,32 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular-moment": "^1.0.0-beta.6",
     "app-module-path": "^1.1.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "dotenv": "^2.0.0",
     "ejs": "^2.4.2",
+    "envfile": "^2.1.1",
     "express": "^4.14.0",
     "express-session": "^1.13.0",
+    "forecast-io": "^1.0.2",
     "google-auth-library": "^0.9.8",
     "googleapis": "^12.0.0",
     "insight": "^0.8.2",
+    "lodash": "^4.14.1",
     "marked": "^0.3.5",
     "method-override": "^2.3.6",
-    "moment": "^2.13.0",
+    "moment": "^2.14.1",
+    "moment-timezone": "^0.5.5",
     "mongoose": "^4.5.1",
     "mongoose-validator": "^1.2.5",
     "node-mongoose-validator": "^1.2.0",
     "simple-oauth2": "^0.7.0",
-    "universal-analytics": "^0.4.2"
+    "underscore": "^1.8.3",
+    "universal-analytics": "^0.4.2",
+    "wordpress-posts": "^1.0.1",
+    "zipcodes": "^2.1.0"
   },
   "repository": {
     "type": "git",
@@ -36,5 +45,7 @@
     "url": "https://github.com/codedoll/forum_app/issues"
   },
   "homepage": "https://github.com/codedoll/forum_app#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "wordpress-posts-crawler": "^0.4.3"
+  }
 }

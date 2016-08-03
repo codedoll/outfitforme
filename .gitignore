@@ -42,3 +42,4 @@ Thumbs.db
 node_modules
 client_secret.json
 *.env
+*.json
