@@ -1,8 +1,47 @@
-var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 'ngSanitize']);
+var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 'ui.select', 'ngSanitize']);
 
 // app.run(function(amMoment) {
 //     amMoment.changeLocale('de');
 // });
+
+/**
+ * AngularJS default filter with the following expression:
+ * "person in people | filter: {name: $select.search, age: $select.search}"
+ * performs an AND between 'name: $select.search' and 'age: $select.search'.
+ * We want to perform an OR.
+ */
+app.filter('propsFilter', function() {
+  return function(items, props) {
+    var out = [];
+
+    if (angular.isArray(items)) {
+      var keys = Object.keys(props);
+        
+      items.forEach(function(item) {
+        var itemMatches = false;
+
+        for (var i = 0; i < keys.length; i++) {
+          var prop = keys[i];
+          var text = props[prop].toLowerCase();
+          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+            itemMatches = true;
+            break;
+          }
+        }
+
+        if (itemMatches) {
+          out.push(item);
+        }
+      });
+    } else {
+      // Let the output be the input untouched
+      out = items;
+    }
+
+    return out;
+  };
+});
+
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode({
@@ -29,8 +68,6 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', function($http, $scope, $routeParams, $route) {
 
     var self = this;
-
-
 
     moment.tz.add([
         'America/Los_Angeles|PST PDT|80 70|0101|1Lzm0 1zb0 Op0',
@@ -90,16 +127,13 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', f
         })
     };
 
+    $scope.itemArray = [
+        {id: 1, name: 'first'},
+        {id: 2, name: 'second'},
+        {id: 3, name: 'third'},
+        {id: 4, name: 'fourth'},
+        {id: 5, name: 'fifth'},
+    ];
 
-    $scope.data = {
-    model: null,
-    availableOptions: [
-      {id: '1', name: 'Blouse'},
-      {id: '2', name: 'Dress'},
-      {id: '3', name: 'Skirt'}
-    ],
-   };
-
-
-
+    $scope.selected = { value: $scope.itemArray[0] };
 }]); // end MainController

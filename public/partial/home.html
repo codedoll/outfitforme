@@ -1,14 +1,16 @@
 <div class="flex-container">
     <div class="flex-item">
-        <form name="myForm">
-            <label for="repeatSelect"> What's today's outfit?</label>
-            <br/>
-            <select name="repeatSelect" id="repeatSelect" ng-model="data.model">
-                <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-            </select>
-        </form>
-        <tt>model = {{data.model}}</tt>
-        <br/>
+<ui-select ng-model="selected.value">
+    <ui-select-match>
+        <span ng-bind="$select.selected.name"></span>
+    </ui-select-match>
+    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+        <span ng-bind="item.name"></span>
+    </ui-select-choices>
+</ui-select>
+
+{{selected}}
+
         <form ng-submit="mctrl.forecast(userLocation)">
             <span id="whereu">where are you heading?</span>
             <br>
