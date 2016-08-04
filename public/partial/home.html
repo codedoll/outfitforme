@@ -1,5 +1,14 @@
-<div class="flex-container wrap">
-    <div class="flex-item column-left">
+<div class="flex-container">
+    <div class="flex-item">
+        <form name="myForm">
+            <label for="repeatSelect"> What's today's outfit?</label>
+            <br/>
+            <select name="repeatSelect" id="repeatSelect" ng-model="data.model">
+                <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+            </select>
+        </form>
+        <tt>model = {{data.model}}</tt>
+        <br/>
         <form ng-submit="mctrl.forecast(userLocation)">
             <span id="whereu">where are you heading?</span>
             <br>
@@ -7,20 +16,16 @@
             <br/>
             <button type="submit">submit</button>
         </form>
-
-        <!-- {{mctrl.darksky.timezone}} -->
-        <!-- <br/> -->
-        {{mctrl.darksky.city}} <canvas id="icon1" width="64" height="64"></canvas>
+        {{mctrl.darksky.city}}
+        <canvas id="icon1" width="64" height="64"></canvas>
         <br/>
-        <!-- <span am-time-ago="message.time"></span> -->
         <span>{{ mctrl.darksky.hourly.summary}}</span>
-        <span am-time-ago="message.text"></span>   
-
+        <span am-time-ago="message.text"></span>
     </div>
-    <div class="flex-item column-center">
-        <h1>Heys</h1>
+    <div class="flex-item">
+        <h1>you chose:</h1>
     </div>
-    <div class="flex-item column-right">
-        <h1>Heys</h1>
+    <div class="flex-item">
+        <h1>you might like:</h1>
     </div>
 </div>

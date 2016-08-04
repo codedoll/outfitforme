@@ -91,5 +91,15 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', f
     };
 
 
+    $scope.data = {
+    model: null,
+    availableOptions: [
+      {id: '1', name: 'Blouse'},
+      {id: '2', name: 'Dress'},
+      {id: '3', name: 'Skirt'}
+    ],
+   };
+
+
 
 }]); // end MainController
