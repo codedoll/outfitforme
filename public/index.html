@@ -25,20 +25,21 @@
         <a ng-href="/">
             <h1 id="sitename"><span class="one">outfit</span><span class="two">for</span><span class="three">me</span></h1>
         </a>
-        </div>
 
-</header>
-
-<body ng-controller="MainController as mctrl">
     <a href="/ga">
         <button ng-href="/ga" class="btn btn-primary btn">
             admin
         </button>
     </a>
+        </div>
+
+</header>
+
+<body ng-controller="MainController as mctrl">
     <div ng-view>
         <div ng-include="partial/home.html"></div>
     </div>
-
+</div>
 
 </body>
 
