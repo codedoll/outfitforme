@@ -1,46 +1,57 @@
 <!DOCTYPE html>
-<html ng-app="OutfitForMe">
+<html class="no-js" lang="" ng-app="OutfitForMe">
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.js"></script>
     <script src="https://cdn.jsdelivr.net/angular.moment/1.0.0-beta.6/angular-moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.5/moment-timezone.js"></script>
-    <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-sanitize.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/skycon.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/lumen/bootstrap.css">
-    <script type="text/javascript" src="skycon.js"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 </head>
 <header>
-    <div class="wrapper">
-        <div>
-        <a ng-href="/">
-            <h1 id="sitename"><span class="one">outfit</span><span class="two">for</span><span class="three">me</span></h1>
-        </a>
-
-    <a href="/ga">
-        <button ng-href="/ga" class="btn btn-primary btn">
-            admin
-        </button>
-    </a>
+    <div class="navigation">
+        <div class="navdiv" id="siteTitle">
+            <a ng-href="/">
+                <h1 id="sitename"><span class="one">outfit</span><span class="two">for</span><span class="three">me</span></h1>
+            </a>
         </div>
-
+        <div class="navdiv">
+            <a href="/ga">
+                <button ng-href="/ga" class="btn btn-primary btn">
+                    admin
+                </button>
+                </a>
+        </div>
+<!--         <div class="navdiv"><a href="#">Products</a></div>
+        <div class="navdiv"><a href="#">Products</a></div>
+        <div class="navdiv"><a href="#">Products</a></div> -->
+        <div class="navdiv"><a href="#">Products</a></div>
+        <div class="navdiv"><a href="#">Contact</a></div>
+    </div>
 </header>
 
 <body ng-controller="MainController as mctrl">
     <div ng-view>
         <div ng-include="partial/home.html"></div>
     </div>
-</div>
-
+    </div>
 </body>
 
 </html>
