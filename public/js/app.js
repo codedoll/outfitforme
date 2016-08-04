@@ -1,4 +1,4 @@
-var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 'ui.select', 'ngSanitize']);
+var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 'ui.select', 'ngSanitize', 'ngDialog', ]);
 
 // app.run(function(amMoment) {
 //     amMoment.changeLocale('de');
@@ -11,35 +11,35 @@ var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 
  * We want to perform an OR.
  */
 app.filter('propsFilter', function() {
-  return function(items, props) {
-    var out = [];
+    return function(items, props) {
+        var out = [];
 
-    if (angular.isArray(items)) {
-      var keys = Object.keys(props);
-        
-      items.forEach(function(item) {
-        var itemMatches = false;
+        if (angular.isArray(items)) {
+            var keys = Object.keys(props);
 
-        for (var i = 0; i < keys.length; i++) {
-          var prop = keys[i];
-          var text = props[prop].toLowerCase();
-          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-            itemMatches = true;
-            break;
-          }
+            items.forEach(function(item) {
+                var itemMatches = false;
+
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
         }
 
-        if (itemMatches) {
-          out.push(item);
-        }
-      });
-    } else {
-      // Let the output be the input untouched
-      out = items;
-    }
-
-    return out;
-  };
+        return out;
+    };
 });
 
 
@@ -53,8 +53,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         templateUrl: 'partial/home.html',
         controller: 'MainController',
         controllerAs: 'mctrl'
-    }).when('/ga', {
-        templateUrl: 'google.html',
+    }).when('/admin', {
+        templateUrl: 'admin.html',
         controller: 'MainController',
         controllerAs: 'mctrl'
     })
@@ -65,14 +65,49 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 
 
 
-app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', function($http, $scope, $routeParams, $route) {
+app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', 'ngDialog', function($http, $scope, $routeParams, $route, ngDialog) {
 
     var self = this;
+
+    $scope.sayHi = "HI"
+    
+    $scope.name = "bella";
+
+    //GET ALL CLOTHING VALUES IN DB
+    $scope.adminLoad = function() {
+        $http({
+            url: '/clothing',
+            method: 'GET',
+        }).then(function(clothingDbData) {
+            console.log(clothingDbData.data);
+            self.clothingDbData = clothingDbData.data;
+        });
+        //END adminLoad function
+    };
 
     moment.tz.add([
         'America/Los_Angeles|PST PDT|80 70|0101|1Lzm0 1zb0 Op0',
         'America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'
     ]);
+
+
+    this.deleteClothing = function(clothing) {
+        $http({
+            method: 'DELETE',
+            url: '/clothingDelete',
+            data: {
+                clothing: clothing
+            },
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            }
+        })
+
+        $route.reload();
+    }
+
+
+
 
     // this.analytics = function() {
     //     // console.log('hi from analytics');
@@ -103,37 +138,71 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', f
 
     var currentIcon;
     this.forecast = function(userLocation) {
-        // console.log(userLocation)
+
+        console.log(userLocation)
         $http({
             url: '/forecast/' + userLocation.zipcode,
             method: 'GET',
-            // data: userLocation
         }).then(function(data) {
+            console.log(data.data);
 
             self.darksky = data.data;
-            
+
             self.sky = data.data.hourly.data
 
             var skycons = new Skycons({ "color": "orange" });
 
             var currentIcon = data.data.currently.icon.toUpperCase();
-            
-            var currentIcon2 = currentIcon.replace(/[_-]/g, "_");
 
+            var currentIcon2 = currentIcon.replace(/[_-]/g, "_");
+            
             skycons.add("icon1", Skycons[currentIcon2]);
 
             skycons.play();
+            self.apprentTemp = data.data.currently.apparentTemperature + '℉';
+
+            self.callDark(data.data.currently.apparentTemperature)
 
         })
     };
 
-    $scope.itemArray = [
-        {id: 1, name: 'first'},
-        {id: 2, name: 'second'},
-        {id: 3, name: 'third'},
-        {id: 4, name: 'fourth'},
-        {id: 5, name: 'fifth'},
-    ];
+    this.callDark = function(data) {
+            console.log(data);
+    }
 
-    $scope.selected = { value: $scope.itemArray[0] };
+
+    $scope.clothingSelectLoad = function() {
+
+        $http({
+            url: '/clothing',
+            method: 'GET',
+        }).then(function(clothingDbData) {
+            console.log(clothingDbData.data);
+            $scope.itemArray = clothingDbData.data;
+            $scope.selected = {};
+            console.log($scope.selected);
+        });
+        // END clothingSelectLoad 
+    };
+
+
+    // MODAL for EDIT CLOTHING
+    this.editClothingModal = function(clothing) {
+        $scope.clothing = clothing;
+            ngDialog.open({
+                template: '/partial/edit.html',
+                controller: 'MainController',
+                scope: $scope
+            });
+            // ngDialog.open({
+            //     template: '/partial/edit.html',
+            //     // className: 'ngdialog-theme-plain',
+            //     controller: 'MainController',
+            //     scope: $scope
+            // });
+            // };
+
+        }
+        // end MODAL for EDIT CLOTHING
+
 }]); // end MainController

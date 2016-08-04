@@ -1,0 +1,40 @@
+<style>
+body {
+    padding: 15px;
+}
+
+.select2 > .select2-choice.ui-select-match {
+    /* Because of the inclusion of Bootstrap */
+    height: 29px;
+}
+
+.selectize-control > .selectize-dropdown {
+    top: 36px;
+}
+</style>
+</head>
+
+<body ng-controller="MainController as mctrl">
+    <div ng-init="adminLoad()"></div>
+    <form action="/clothingAdd" method="POST">
+        <input type="text" name="name" placeholder="clothing name" />
+        <br>
+        <input type="number" name="tempmin" placeholder="min temp" />
+        <br>
+        <input type="number" name="tempmax" placeholder="max temp" />
+        <br>
+        <input type="text" name="imgurl" placeholder="img url" />
+        <br>
+        <input type="submit" value="submit" />
+    </form>
+    <div class="adminClothingContainer" ng-repeat="clothing in mctrl.clothingDbData">
+        <div class ="adminClothingHolder">
+            <img src="{{clothing.imgurl}}">
+            <br/> {{clothing.name}}
+            <button class="btn btn-info" ng-click="mctrl.deleteClothing(clothing)">delete</button>
+            <button class="btn btn-info" ng-click="mctrl.editClothingModal(clothing)">edit</button>
+        </div>
+    </div>
+</body>
+
+</html>

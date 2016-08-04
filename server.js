@@ -14,6 +14,7 @@ var _ = require('lodash');
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 
+var Clothing = require('./models/clothing_model.js');
 
 // Include envfile 
 // var envfile = require('envfile')
@@ -58,7 +59,7 @@ var authClient = new JWT(
 );
 
 var port = process.env.PORT || 4000
-    var MONGODBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/outfitforme'
+var MONGODBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/outfitforme'
 var app = express();
 
 mongoose.connect(MONGODBURI);
@@ -224,6 +225,35 @@ app.get('/forecast/:id', function(req, res) {
         })
 
 });
+
+
+app.get('/clothing', function(req, res) {
+    Clothing.find(function(err, data) {
+        console.log(data);
+        res.send(data)
+    });
+})
+
+
+// CREATES THE CLOTHING
+app.post('/clothingAdd', function(req, res) {
+    Clothing.create(req.body, function(err, data) {
+        res.redirect("/")
+
+    })
+
+});
+// end create clothing
+
+
+// DELETES THE CLOTHING
+app.delete('/clothingDelete', function(req, res) {
+    Clothing.findByIdAndRemove(req.body.clothing._id, function(err, data) {
+        res.send(data)
+    })
+});
+// end delete clothing
+
 
 app.get('*', function(req, res) {
     res.redirect('/');

@@ -173,3 +173,9 @@ canvas#icon1 {
   text-align: center;*/
 }
 /*https://css-tricks.com/snippets/css/a-guide-to-flexbox/*/
+
+
+img {
+    max-width: 300px;
+    max-height: 300px;
+}
