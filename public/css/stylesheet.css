@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Muli:400,300,300italic,400italic|Quicksand:400,300,700);
+@import url(https://fonts.googleapis.com/css?family=Oxygen:400,300,700);
+
 h1#sitename {
     font-family: 'Quicksand', sans-serif;
     font-weight: 500;
@@ -182,8 +185,8 @@ canvas#icon1 {
 
 
 img {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 350px;
+    max-height: 350px;
 }
 
 
@@ -195,7 +198,6 @@ img {
     display: flex;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Muli:400,300,300italic,400italic|Quicksand:400,300,700);
 a {
     background-color: #D3D3D3;
 }
@@ -208,9 +210,14 @@ h1 {
     font-family: 'Quicksand', sans-serif;
 }
 
-h3 {
+.homeHeader {
     font-family: 'Muli', sans-serif;
-    font-weight: 300;
+    /*font-weight: 300;*/
+}
+
+/* Resizes the dropdown */
+.dropdown {
+    width: 17em;
 }
 
 h4 {

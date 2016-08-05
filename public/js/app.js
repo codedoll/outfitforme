@@ -69,16 +69,24 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
     var self = this;
 
+    // loading warning
+    $scope.dataLoaded = true;
+
     $scope.sayHi = "HI"
 
     $scope.name = "bella";
 
     //GET ALL CLOTHING VALUES IN DB
     $scope.adminLoad = function() {
+        $scope.dataLoaded = false;
+
         $http({
             url: '/clothing',
             method: 'GET',
         }).then(function(clothingDbData) {
+
+            $scope.dataLoaded = true;
+
             console.log(clothingDbData.data);
             self.clothingDbData = clothingDbData.data;
         });
@@ -151,7 +159,9 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
             self.sky = data.data.hourly.data
 
-            var skycons = new Skycons({ "color": "orange" });
+            var randColor = '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
+
+            var skycons = new Skycons({ "color": randColor });
 
             var currentIcon = data.data.currently.icon.toUpperCase();
 
@@ -197,13 +207,16 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
 
     this.gilt = function(selected) {
+        $scope.dataLoaded = false;
 
         $http({
             url: 'https://api.gilt.com/v1/products?q=' + selected.value.keywords + '&store=women&apikey=4f98486dc17f0323eb0a1c474784cfa025625669f94b331998e68fe6b82bd987',
             method: 'GET',
         }).then(function(data) {
+            $scope.dataLoaded = true;
+
             // console.log(data.data.products.length);
-            var giltReturn = data.data.products.length+1;
+            var giltReturn = data.data.products.length + 1;
             var randOutfit = Math.floor(Math.random() * giltReturn);
             $scope.giltSuggest = data.data.products[randOutfit]
             $scope.giltSuggestImg = $scope.giltSuggest.image_urls["420x560"][0].url;

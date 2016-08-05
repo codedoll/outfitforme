@@ -1,7 +1,7 @@
 <div>
     <div class="container" ng-init=clothingSelectLoad()>
         <div class="column-left" id="userArea">
-            <h3>What's today's outfit?</h3>
+            <h3 class="homeHeader">What's today's outfit?</h3>
             <ui-select ng-model="selected.value">
                 <ui-select-match>
                     <span ng-bind="$select.selected.name"></span>
@@ -11,15 +11,16 @@
                 </ui-select-choices>
             </ui-select>
             <div id="stateWrapper">
-                <h3>Where are you heading?</h3>
+                <h3 class="homeHeader">Where are you heading?</h3>
             </div>
             <form ng-submit="mctrl.forecast(userLocation)">
-                <span id="whereu">where are you heading?</span>
-                <br>
-                <input type="text" ng-model="userLocation.zipcode">
+                <input type="text" ng-model="userLocation.zipcode" ng-init="userLocation.zipcode='27530'">
                 <br/>
                 <button type="submit">submit</button>
             </form>
+            <p class="text-center" ng-hide="dataLoaded">
+                <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+            </p>
             {{mctrl.darksky.city}}
             <canvas id="icon1" width="64" height="64"></canvas>
             <br/>
@@ -37,6 +38,9 @@
             <h5>{{selected.value.name}}</h5>
         </div>
         <div class="column-right" id="WeatherWrapper3">
+            <p class="text-center" ng-hide="dataLoaded">
+                <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+            </p>
             <h5>you might like:</h5> {{giltSuggest.name}}
             <br>
             <img src="{{giltSuggestImg}}">
