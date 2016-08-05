@@ -1,44 +1,45 @@
-<div class="flex-container" ng-init=clothingSelectLoad()>
-    <div class="flex-item">
-        <span id="whereu">Today's outfit</span>
-        <br>
-        <ui-select ng-model="selected.value">
-            <ui-select-match>
-                <span ng-bind="$select.selected.name"></span>
-            </ui-select-match>
-            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item._id">
-                <span ng-bind="item.name"></span>
-            </ui-select-choices>
-        </ui-select>
-
-        <form ng-submit="mctrl.forecast(userLocation)">
-
-<h5>{{selected.value.name}}</h5>
-            <span id="whereu">where are you heading?</span>
-            <br>
-            <input type="text" ng-model="userLocation.zipcode">
+<div>
+    <div class="container" ng-init=clothingSelectLoad()>
+        <div class="column-left" id="userArea">
+            <h3>What's today's outfit?</h3>
+            <ui-select ng-model="selected.value">
+                <ui-select-match>
+                    <span ng-bind="$select.selected.name"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item._id">
+                    <span ng-bind="item.name"></span>
+                </ui-select-choices>
+            </ui-select>
+            <div id="stateWrapper">
+                <h3>Where are you heading?</h3>
+            </div>
+            <form ng-submit="mctrl.forecast(userLocation)">
+                <span id="whereu">where are you heading?</span>
+                <br>
+                <input type="text" ng-model="userLocation.zipcode">
+                <br/>
+                <button type="submit">submit</button>
+            </form>
+            {{mctrl.darksky.city}}
+            <canvas id="icon1" width="64" height="64"></canvas>
             <br/>
-            <button type="submit">submit</button>
-        </form>
-        {{mctrl.darksky.city}}
-        <canvas id="icon1" width="64" height="64"></canvas>
-        <br/>
-        <span>{{ mctrl.darksky.currently.summary}}</span>
-        <span>{{ mctrl.apprentTemp}} </span>
-        <span>{{ mctrl.evaluation}} </span>
-        <span am-time-ago="message.text"></span>
-    </div>
-    <div class="flex-item">
-        <img src="{{selected.value.imgurl}}">
-        <h5>{{selected.value.name}}</h5>
-        <div class="temp-info">
-            Min temp: {{selected.value.tempmin}}
+            <span>{{ mctrl.darksky.currently.summary}}</span>
+            <span>{{ mctrl.apprentTemp}} </span>
+            <br>
+            <span>{{ mctrl.resultDisplay}} </span>
+            <span am-time-ago="message.text"></span>
+            <div id="WeatherWrapper">
+            </div>
         </div>
-        <div class="temp-info">
-            Max temp: {{selected.value.tempmax}}
+        <div class="column-center" id="WeatherWrapper2">
+            <h5>you chose:</h5>
+            <img src="{{selected.value.imgurl}}">
+            <h5>{{selected.value.name}}</h5>
         </div>
-    </div>
-    <div class="flex-item">
-        <h1>you might like:</h1>
+        <div class="column-right" id="WeatherWrapper3">
+            <h5>you might like:</h5> {{giltSuggest.name}}
+            <br>
+            <img src="{{giltSuggestImg}}">
+        </div>
     </div>
 </div>

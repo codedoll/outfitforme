@@ -70,7 +70,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
     var self = this;
 
     $scope.sayHi = "HI"
-    
+
     $scope.name = "bella";
 
     //GET ALL CLOTHING VALUES IN DB
@@ -137,14 +137,15 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
     // this.analytics2();
 
     var currentIcon;
-    this.forecast = function(userLocation) {
 
-        console.log(userLocation)
+    this.forecast = function(userLocation) {
+        // console.log($scope.selected);
+        // console.log(userLocation);
         $http({
             url: '/forecast/' + userLocation.zipcode,
             method: 'GET',
         }).then(function(data) {
-            console.log(data.data);
+            // console.log(data.data);
 
             self.darksky = data.data;
 
@@ -155,19 +156,26 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             var currentIcon = data.data.currently.icon.toUpperCase();
 
             var currentIcon2 = currentIcon.replace(/[_-]/g, "_");
-            
+
             skycons.add("icon1", Skycons[currentIcon2]);
 
             skycons.play();
             self.apprentTemp = data.data.currently.apparentTemperature + '℉';
 
-            self.callDark(data.data.currently.apparentTemperature)
+            self.callDark(data.data.currently.apparentTemperature, $scope.selected)
 
         })
     };
 
-    this.callDark = function(data) {
-            console.log(data);
+    this.callDark = function(apparentTemperature, selected) {
+        console.log(selected.value.keywords)
+        var mindif = apparentTemperature - selected.value.tempmin;
+        if (mindif > 5) {
+            self.resultDisplay = "Just right!"
+
+            self.gilt(selected)
+        }
+
     }
 
 
@@ -177,18 +185,34 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             url: '/clothing',
             method: 'GET',
         }).then(function(clothingDbData) {
-            console.log(clothingDbData.data);
+            // console.log(clothingDbData.data);
             $scope.itemArray = clothingDbData.data;
             $scope.selected = {};
-            console.log($scope.selected);
+            // console.log($scope.selected);
         });
         // END clothingSelectLoad 
     };
 
 
+
+
+    this.gilt = function(selected) {
+
+        $http({
+            url: 'https://api.gilt.com/v1/products?q=' + selected.value.keywords + '&store=women&apikey=4f98486dc17f0323eb0a1c474784cfa025625669f94b331998e68fe6b82bd987',
+            method: 'GET',
+        }).then(function(data) {
+            // console.log(data.data.products.length);
+            var giltReturn = data.data.products.length+1;
+            var randOutfit = Math.floor(Math.random() * giltReturn);
+            $scope.giltSuggest = data.data.products[randOutfit]
+            $scope.giltSuggestImg = $scope.giltSuggest.image_urls["420x560"][0].url;
+        })
+    };
+
     // MODAL for EDIT CLOTHING
     this.editClothingModal = function(clothing) {
-        $scope.clothing = clothing;
+            $scope.clothing = clothing;
             ngDialog.open({
                 template: '/partial/edit.html',
                 controller: 'MainController',

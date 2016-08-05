@@ -10,6 +10,7 @@ var path = require('path');
 var zipcodes = require('zipcodes');
 var moment = require('moment');
 var _ = require('lodash');
+var httpRequest = require('fd-http-request');
 
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
@@ -206,6 +207,10 @@ app.get('/forecast/:id', function(req, res) {
     var ForecastIO = require('forecast-io')
     var forecast = new ForecastIO(process.env.DARKSKY)
 
+    // httpRequest.get('https://api.gilt.com/v1/products?q=summer+dress&store=women&apikey=4f98486dc17f0323eb0a1c474784cfa025625669f94b331998e68fe6b82bd987', function(res){
+    // console.log( res );
+    // });
+
     forecast
         .latitude(location.latitude.toString()) //required: latitude, string.
         .longitude(location.longitude.toString()) // required: longitude, string.
@@ -224,12 +229,15 @@ app.get('/forecast/:id', function(req, res) {
             console.log(err)
         })
 
+
+
+
 });
 
 
 app.get('/clothing', function(req, res) {
     Clothing.find(function(err, data) {
-        console.log(data);
+        // console.log(data);
         res.send(data)
     });
 })

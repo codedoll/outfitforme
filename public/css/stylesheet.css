@@ -106,7 +106,9 @@ canvas#icon1 {
     .navigation {
         justify-content: space-around;
     }
-    /*.navdiv:nth-of-type(1) { flex-grow: 3; padding-left: 10em;}*/
+    .navdiv { 
+        width: 30%;
+    }
 }
 
 @media all and (max-width: 600px) {
@@ -136,6 +138,10 @@ canvas#icon1 {
     flex-grow: 3;
 }
 
+@font-face {
+    font; Newfont;
+    url"
+}
 .navdiv:nth-of-type(2) {
     flex-grow: 0;
 }
@@ -178,4 +184,173 @@ canvas#icon1 {
 img {
     max-width: 300px;
     max-height: 300px;
+}
+
+
+.adminClothingHolder {
+    display: inline-block;
+}
+
+.adminClothingContainer {
+    display: flex;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Muli:400,300,300italic,400italic|Quicksand:400,300,700);
+a {
+    background-color: #D3D3D3;
+}
+
+body {
+    font-family: 'Muli', sans-serif;
+}
+
+h1 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+h3 {
+    font-family: 'Muli', sans-serif;
+    font-weight: 300;
+}
+
+h4 {
+    font-family: 'Muli', sans-serif;
+    font-weight: 400;
+    text-shadow: 1px 1px #DCD5D5;
+    color: #797979;
+}
+
+#userArea {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#weatherWrapper {
+    margin-top,
+    margin-bottom: 20px;
+}
+
+#weatherWrapper2 {
+    background-color: #A8B572;
+    margin-top,
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 220px;
+}
+
+.mWeather {
+    color: green;
+}
+
+.cloudyMain {
+    color: gray;
+}
+
+.thunderstormMain {
+    color: gray;
+}
+
+.city {
+    margin-top: 10px;
+}
+
+.tempNowCSS {
+    font-weight: 400;
+    text-shadow: 1px 1px #DCD5D5;
+    color: #797979;
+}
+
+.btn-info.active,
+.btn-info:active,
+.btn-info,
+.btn-info.active,
+.btn-info:active,
+.open>.dropdown-toggle.btn-info {
+    color: #fff;
+    background-color: #C4D18B;
+    border-color: #A8B572;
+}
+
+.btn-info:focus,
+.btn-info.focus {
+    color: #fff;
+    background-color: #A8B572;
+    border-color: #C4D18B;
+}
+
+.btn-info:hover {
+    background-color: #C4D18B;
+    border-color: #D4DCB1;
+}
+
+.weatherpng {
+    width: 40px;
+    height: 40px;
+}
+
+.title1 {
+    color: #FFD394;
+}
+
+.title2 {
+    color: #C4D18B;
+}
+
+.title3 {
+    color: #FF9CA8;
+}
+
+.column-left {
+    float: left;
+    width: 33%;
+}
+
+.column-right {
+    float: right;
+    width: 33%;
+    margin-top: 30px;
+}
+
+.column-center {
+    float: left;
+    width: 33%;
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 400px) {
+    body {
+        background: red;
+    }
+    .column-right,
+    .column-left,
+    .column-center {
+        width: 100%;
+        float: none;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    body {
+        background: none;
+    }
+    .column-right,
+    .column-left,
+    .column-center {
+        width: 60%;
+        float: left;
+    }
+}
+
+@media screen and (max-width: 800) {
+    body {
+        background: none;
+    }
+    .column-right,
+    .column-left,
+    .column-center {
+        width: 60%;
+        float: left;
+    }
 }

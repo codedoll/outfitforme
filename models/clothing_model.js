@@ -6,7 +6,7 @@ var clothingSchema = new Schema({
         'name': String, 
         'tempmin': Number , 
         'tempmax': Number,
-        'keywords': [], 
+        'keywords': String, 
         'imgurl': String
 });
 

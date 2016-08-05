@@ -19,6 +19,7 @@
     "envfile": "^2.1.1",
     "express": "^4.14.0",
     "express-session": "^1.13.0",
+    "fd-http-request": "^1.1.2",
     "forecast-io": "^1.0.2",
     "google-auth-library": "^0.9.8",
     "googleapis": "^12.0.0",
