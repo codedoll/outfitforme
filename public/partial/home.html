@@ -33,15 +33,16 @@
             </div>
         </div>
         <div class="column-center" id="WeatherWrapper2">
-            <h5>you chose:</h5>
+            <h5 class="bgtext">you chose:</h5>
+            <h5 class="chose-title">{{selected.value.name}}</h5>
             <img src="{{selected.value.imgurl}}">
-            <h5>{{selected.value.name}}</h5>
         </div>
         <div class="column-right" id="WeatherWrapper3">
             <p class="text-center" ng-hide="dataLoaded">
                 <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
             </p>
-            <h5>you might like:</h5> {{giltSuggest.name}}
+            <h5 class="bgtext">you might like:</h5> 
+            <h5 class="chose-title">{{giltSuggest.name}}</h5>
             <br>
             <img src="{{giltSuggestImg}}">
         </div>

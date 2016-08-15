@@ -1,6 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Muli:400,300,300italic,400italic|Quicksand:400,300,700);
 @import url(https://fonts.googleapis.com/css?family=Oxygen:400,300,700);
 
+body {
+    font-family: 'Muli', sans-serif;
+    color: #434343;
+}
+
 h1#sitename {
     font-family: 'Quicksand', sans-serif;
     font-weight: 500;
@@ -95,7 +100,7 @@ canvas#icon1 {
 }
 
 .navigation a {
-    text-decoration: none;
+    text-decoration: none !important;
     display: block;
     padding: 1em;
     color: #607d8b;
@@ -197,10 +202,6 @@ img {
 
 a {
     /*background-color: #D3D3D3;*/
-}
-
-body {
-    font-family: 'Muli', sans-serif;
 }
 
 h1 {
@@ -366,4 +367,12 @@ h4 {
     padding-left: 15px;
     margin-right: auto;
     margin-left: 5%;
+}
+
+.bgtext {
+    color: #828282;
+}
+.chose-title {
+    font-size: 1.5em;
+    font-family: 'Muli', sans-serif;
 }
