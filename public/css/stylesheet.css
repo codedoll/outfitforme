@@ -141,10 +141,7 @@ canvas#icon1 {
     flex-grow: 3;
 }
 
-@font-face {
-    font; Newfont;
-    url"
-}
+
 .navdiv:nth-of-type(2) {
     flex-grow: 0;
 }
@@ -311,7 +308,8 @@ h4 {
 
 .column-left {
     float: left;
-    width: 33%;
+    width: 25%;
+    padding-right: 5em;
 }
 
 .column-right {
@@ -360,4 +358,12 @@ h4 {
         width: 60%;
         float: left;
     }
+}
+
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: 5%;
 }

@@ -3,26 +3,37 @@ require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var session = require('express-session');
+// var session = require('express-session');
 var moment = require('moment-timezone');
 var bcrypt = require('bcrypt');
 var path = require('path');
 var zipcodes = require('zipcodes');
 var moment = require('moment');
+var session = require('client-sessions');
 var _ = require('lodash');
 var httpRequest = require('fd-http-request');
+
 
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 
 var Clothing = require('./models/clothing_model.js');
+var User = require('./models/user_model.js');
+var app = express();
 
+app.use(session({
+    cookieName: 'session',
+    secret: 'random_string_goes_here',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+}));
 // Include envfile 
 // var envfile = require('envfile')
 // var sourcePath = 'file.env'
 // var sourceString = "a=1\nb:2"
 // var sourceObject = { a: 1, b: 2 }
 
+console.log(session.sessionID);
 
 var CLIENT_ID = process.env.CLIENT_ID;
 var CLIENT_SECRET = process.env.ANALYTICS_SECRET;
@@ -61,120 +72,86 @@ var authClient = new JWT(
 
 var port = process.env.PORT || 4000
 var MONGODBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/outfitforme'
-var app = express();
 
 mongoose.connect(MONGODBURI);
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(methodOverride('_method'));
 
-app.use(session({
-    secret: "beagle",
-    resave: false,
-    saveUninitialized: false
-}));
+// app.use(session({
+//     cookieName: 'session',
+//     secret: 'beagle',
+//     resave: false,
+//     saveUninitialized: true
+// }));
+
+
+
+
+// console.log(session);
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
 
+// LOGIN ROUTE
+app.post('/userlogin', function(req, res) {
 
-// app.get('/analytics', function(req, res) {
+    User.findOne({ "username": req.body.username }, function(err, user) {
+        // console.log(user);
+        if (user == null) {
+            // console.log("no user found");
+            res.send({ user: "INVALID" })
+        } else if (user.username === req.body.username) {
+            // sets a cookie with the user's info
 
-//     authClient.authorize(function(err, tokens) {
-//         if (err) {
-//             // console.log(err);
-//             return;
-//         }
+            if (bcrypt.compareSync(req.body.password, user.password)) {
+                console.log("Login success");
+                // console.log(session);
+                req.session.user = user
+                req.session.username = user.username
 
-//         analytics.data.ga.get({
-//             auth: authClient,
-//             'ids': 'ga:119753868',
-//             'start-date': '30daysAgo',
-//             'end-date': 'yesterday',
-//             'metrics': 'ga:visits'
-//         }, function(err, data) {
-//             // console.log(err);
-//             // console.log(data);
-//             res.send(data)
-//         });
+                res.send({
+                    sessionID: req.session.username
+                });
 
+            } else {
+                console.log("wrong password");
+                // console.log(user);
+                res.send("wrong password")
+            }
 
-//         analytics.data.ga.get({
-//             auth: authClient,
-//             'ids': 'ga:119753868',
-//             'start-date': '30daysAgo',
-//             'end-date': 'yesterday',
-//             'metrics': 'ga:avgSessionDuration'
-//         }, function(err, data) {
-//             // console.log(err);
-//             // console.log(data);
-//             res.send(data)
-//         });
+        }
+    });
+
+});
+
+// end login route
 
 
-//     });
+// USER LOGOUT DESTROY SESSION
+app.get('/logout', function(req, res) {
+  req.session.reset();
+  res.redirect('/');
 
-// })
-
-// app.get('/analytics', function(req, res) {
-//     // var wordpressPosts = require('wordpress-posts');
-//     // var wordpressSiteUrl = "http://codedoll.com/";
-//     // var posts = 4;
-
-//     // wordpressPosts.get(wordpressSiteUrl, posts, function(err, data) {
-//     //     // console.log(data);
-//     // });
-
-//     var google = require('googleapis');
-//     var OAuth2 = google.auth.OAuth2;
-
-//     var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
-
-//     authClient.authorize(function(err, tokens) {
-//         console.log(tokens.access_token);
-//         res.send(tokens.access_token)
-
-//     });
+});
+// end USER LOGOUT DESTROY SESSION
 
 
 
-//     authClient.authorize(function(err, tokens) {
-//         if (err) {
-//             // console.log(err);
-//             return;
-//         }
 
-//         analytics.data.ga.get({
-//             auth: authClient,
-//             'ids': 'ga:119753868',
-//             'start-date': '30daysAgo',
-//             'end-date': 'yesterday',
-//             'metrics': 'ga:visits'
-//         }, function(err, data) {
-//             // console.log(err);
-//             // console.log(data);
-//             res.send(data)
-//         });
+// REQ.SESSION.USERNAME CHECKER
+app.get('/sessionchecker', function(req, res) {
+    // console.log(session);
+    if (req.session && req.session.user) {
+        User.findOne({ "username": req.session.username }, function(err, user) {
+            // console.log(user);
+            res.locals.user = user;
+            res.send(user.username)
+        });
+    }
+});
 
 
-//         analytics.data.ga.get({
-//             auth: authClient,
-//             'ids': 'ga:119753868',
-//             'start-date': '30daysAgo',
-//             'end-date': 'yesterday',
-//             'metrics': 'ga:avgSessionDuration'
-//         }, function(err, data2) {
-//             // console.log(err);
-//             // console.log(data);
-//             res.send(data2)
-//         });
-
-
-//     });
-
-
-
-// });
 
 app.get('/forecast', function(req, res) {
     var ForecastIO = require('forecast-io')
@@ -254,6 +231,22 @@ app.post('/clothingAdd', function(req, res) {
 // end create clothing
 
 
+// CREATES THE USER
+app.post('/usersignup', function(req, res) {
+    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    // console.log(req.body.password);
+
+    User.create(req.body, function(err, data) {
+        req.session.sessionID = req.body.username;
+        res.redirect("/")
+    })
+});
+// end create user
+
+
+
+
+
 // DELETES THE CLOTHING
 app.delete('/clothingDelete', function(req, res) {
     Clothing.findByIdAndRemove(req.body.clothing._id, function(err, data) {
@@ -261,6 +254,17 @@ app.delete('/clothingDelete', function(req, res) {
     })
 });
 // end delete clothing
+
+
+// EDIT EXISTING CLOTHING
+app.put('/edit/:id', function(req, res) {
+    console.log(req.body);
+    Clothing.findByIdAndUpdate(req.params.id, req.body, function(err, clothing) {
+        console.log(clothing);
+        res.send(clothing);
+    });
+});
+// end edit existing clothing
 
 
 app.get('*', function(req, res) {

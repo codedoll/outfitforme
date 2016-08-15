@@ -1,48 +1,5 @@
 var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 'ui.select', 'ngSanitize', 'ngDialog', ]);
 
-// app.run(function(amMoment) {
-//     amMoment.changeLocale('de');
-// });
-
-/**
- * AngularJS default filter with the following expression:
- * "person in people | filter: {name: $select.search, age: $select.search}"
- * performs an AND between 'name: $select.search' and 'age: $select.search'.
- * We want to perform an OR.
- */
-app.filter('propsFilter', function() {
-    return function(items, props) {
-        var out = [];
-
-        if (angular.isArray(items)) {
-            var keys = Object.keys(props);
-
-            items.forEach(function(item) {
-                var itemMatches = false;
-
-                for (var i = 0; i < keys.length; i++) {
-                    var prop = keys[i];
-                    var text = props[prop].toLowerCase();
-                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                        itemMatches = true;
-                        break;
-                    }
-                }
-
-                if (itemMatches) {
-                    out.push(item);
-                }
-            });
-        } else {
-            // Let the output be the input untouched
-            out = items;
-        }
-
-        return out;
-    };
-});
-
-
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode({
         enabled: true,
@@ -57,24 +14,22 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         templateUrl: 'admin.html',
         controller: 'MainController',
         controllerAs: 'mctrl'
+    }).when('/adminform', {
+        templateUrl: 'partial/admin_form.html',
+        controller: 'MainController',
+        controllerAs: 'mctrl'
     })
-
-
 }])
-
-
 
 
 app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', 'ngDialog', function($http, $scope, $routeParams, $route, ngDialog) {
 
     var self = this;
+    var usernameLogged = "GUEST";
 
-    // loading warning
+    self.sessionID = "GUEST";
+
     $scope.dataLoaded = true;
-
-    $scope.sayHi = "HI"
-
-    $scope.name = "bella";
 
     //GET ALL CLOTHING VALUES IN DB
     $scope.adminLoad = function() {
@@ -115,34 +70,44 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
     }
 
 
+    this.sessionchecker = function() {
+        $http({
+            url: '/sessionchecker',
+            method: 'GET'
+        }).then(function(response) {
+            console.log(response.data);
+            self.usernameLogged = response.data;
+        })
+    };
+
+    this.sessionchecker();
 
 
-    // this.analytics = function() {
-    //     // console.log('hi from analytics');
-    //     $http({
-    //         url: '/analytics',
-    //         method: 'GET'
-    //     }).then(function(response) {
-    //         console.log(response.data);
-    //     })
-    // };
+    this.userlogin = function(login) {
+        console.log(login);
+        $http({
+            method: 'POST',
+            url: '/userlogin',
+            data: login
+        }).then(function(data) {
+            console.log(data.data.sessionID);
+            $scope.sessionID = data.data.sessionID
+                // self.sessionID = data.data.sessionID
+            self.usernameLogged = data.data.sessionID;
+            console.log(self.usernameLogged);
+        });
+    }
 
-    // this.analytics();
 
+    this.logout = function() {
+        $http({
+            method: 'GET',
+            url: '/logout',
+        })
+        
+        $route.reload;
 
-
-    // this.analytics2 = function() {
-    //     // console.log('hi from analytics');
-    //     $http({
-    //         url: '/analytics2',
-    //         method: 'GET'
-    //     }).then(function(tokens) {
-    //         // console.log(tokens.data);
-    //         $scope.token = tokens.data;
-    //     })
-    // };
-
-    // this.analytics2();
+    }
 
     var currentIcon;
 
@@ -229,6 +194,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             ngDialog.open({
                 template: '/partial/edit.html',
                 controller: 'MainController',
+                closeByEscape: true,
                 scope: $scope
             });
             // ngDialog.open({
@@ -241,5 +207,20 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
         }
         // end MODAL for EDIT CLOTHING
+
+
+    // EDIT EXISTING CLOTHING FROM ADMIN //
+    this.editclothing = function(clothing){
+        console.log(clothing);
+        $http({
+            method: 'PUT',
+            url: '/edit/' + clothing._id,
+            data: clothing
+        }).then(function(result) {
+            // $scope.closeThisDialog();
+            // $location.path('/admin')
+
+        });
+    }
 
 }]); // end MainController

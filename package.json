@@ -14,6 +14,7 @@
     "app-module-path": "^1.1.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "client-sessions": "^0.7.0",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.2",
     "envfile": "^2.1.1",

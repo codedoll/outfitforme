@@ -1,2 +1,19 @@
 <h5>Edit clothing details:</h5>
-Clothing name: {{clothing.name}}
+Clothing: <img src="{{clothing.imgurl}}">
+
+   <form name="editform" ng-submit="mctrl.editclothing(clothing)"> 
+     <label for="clothing.name">Location Title</label>
+     <input type="text" ng-model="clothing.name"> 
+     <br/> 
+     <label for="clothing.tempmin">Minimum temprature:</label>
+     <input type="text" ng-model="clothing.tempmin"> 
+     <br/> 
+     <label for="clothing.tempmax">Maximum temprature:</label>
+     <input type="text" ng-model="clothing.tempmax"> 
+     <br/> 
+     <label for="clothing.keywords">Keywords:</label>
+     <input type="text" ng-model="clothing.keywords"> 
+     <br/> 
+
+      <input type="submit" value="Submit"> 
+    </form>
