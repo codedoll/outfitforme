@@ -115,7 +115,7 @@ canvas#icon1 {
         justify-content: space-around;
     }
     .navdiv { 
-        width: 30%;
+        /*width: 30%;*/
     }
 }
 
