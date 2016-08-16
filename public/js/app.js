@@ -128,6 +128,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
             var skycons = new Skycons({ "color": randColor });
 
+            //GETTING THE ICON NAME FROM THE JSON
             var currentIcon = data.data.currently.icon.toUpperCase();
 
             var currentIcon2 = currentIcon.replace(/[_-]/g, "_");
