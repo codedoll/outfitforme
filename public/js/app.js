@@ -1,4 +1,4 @@
-var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 'ui.select', 'ngSanitize', 'ngDialog', ]);
+var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 'ui.select', 'ngSanitize', 'ngDialog']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode({
@@ -83,6 +83,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
     this.sessionchecker();
 
 
+    //LOGIN FORM
     this.userlogin = function(login) {
         console.log(login);
         $http({
@@ -99,18 +100,20 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
     }
 
 
+    //LOGOUT BUTTON
     this.logout = function() {
         $http({
             method: 'GET',
             url: '/logout',
         })
-        
         $route.reload;
-
     }
+
+
 
     var currentIcon;
 
+    //CALLS FORECAST
     this.forecast = function(userLocation) {
         // console.log($scope.selected);
         // console.log(userLocation);
@@ -128,35 +131,41 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
             var skycons = new Skycons({ "color": randColor });
 
+
+            //DARKSKIES-IO only gives the icon name. Not the icon itself.
+            //Need to get the object icon name from the json and use another package as a callback.
+
             //GETTING THE ICON NAME FROM THE JSON
             var currentIcon = data.data.currently.icon.toUpperCase();
 
+            //REMOVING THE " - " FROM THE DARKSKIES OBJECT AND MAKES INTO A " _ "
             var currentIcon2 = currentIcon.replace(/[_-]/g, "_");
 
+            //USES THE OBJECT AS A CALLBACK
             skycons.add("icon1", Skycons[currentIcon2]);
 
             skycons.play();
+
             self.apprentTemp = data.data.currently.apparentTemperature + '℉';
-
             self.callDark(data.data.currently.apparentTemperature, $scope.selected)
-
         })
     };
 
+
+
+    //Tells the user if their outfit is weather appropriate
     this.callDark = function(apparentTemperature, selected) {
         console.log(selected.value.keywords)
         var mindif = apparentTemperature - selected.value.tempmin;
         if (mindif > 5) {
             self.resultDisplay = "Just right!"
-
             self.gilt(selected)
         }
+    };
 
-    }
 
-
+    //Gets the selection from dropdown
     $scope.clothingSelectLoad = function() {
-
         $http({
             url: '/clothing',
             method: 'GET',
@@ -166,12 +175,11 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             $scope.selected = {};
             // console.log($scope.selected);
         });
-        // END clothingSelectLoad 
     };
+    // END clothingSelectLoad 
 
 
-
-
+    //Calls clothing json from GILT based on keywords
     this.gilt = function(selected) {
         $scope.dataLoaded = false;
 
@@ -189,6 +197,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
         })
     };
 
+
     // MODAL for EDIT CLOTHING
     this.editClothingModal = function(clothing) {
             $scope.clothing = clothing;
@@ -198,20 +207,12 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
                 closeByEscape: true,
                 scope: $scope
             });
-            // ngDialog.open({
-            //     template: '/partial/edit.html',
-            //     // className: 'ngdialog-theme-plain',
-            //     controller: 'MainController',
-            //     scope: $scope
-            // });
-            // };
-
         }
         // end MODAL for EDIT CLOTHING
 
 
     // EDIT EXISTING CLOTHING FROM ADMIN //
-    this.editclothing = function(clothing){
+    this.editclothing = function(clothing) {
         console.log(clothing);
         $http({
             method: 'PUT',

@@ -3,7 +3,6 @@ require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-// var session = require('express-session');
 var moment = require('moment-timezone');
 var bcrypt = require('bcrypt');
 var path = require('path');
@@ -12,14 +11,12 @@ var moment = require('moment');
 var session = require('client-sessions');
 var _ = require('lodash');
 var httpRequest = require('fd-http-request');
+var app = express();
 
-
-var google = require('googleapis');
-var OAuth2 = google.auth.OAuth2;
 
 var Clothing = require('./models/clothing_model.js');
 var User = require('./models/user_model.js');
-var app = express();
+
 
 app.use(session({
     cookieName: 'session',
@@ -27,67 +24,11 @@ app.use(session({
     duration: 30 * 60 * 1000,
     activeDuration: 5 * 60 * 1000,
 }));
-// Include envfile 
-// var envfile = require('envfile')
-// var sourcePath = 'file.env'
-// var sourceString = "a=1\nb:2"
-// var sourceObject = { a: 1, b: 2 }
 
-console.log(session.sessionID);
-
-var CLIENT_ID = process.env.CLIENT_ID;
-var CLIENT_SECRET = process.env.ANALYTICS_SECRET;
-var REDIRECT_URL = "http://localhost:4000/oauth2callback";
-
-var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
-
-// generate a url that asks permissions for Google+ and Google Calendar scopes
-var scopes = [
-    'https://www.googleapis.com/auth/analytics.readonly'
-];
-
-var url = oauth2Client.generateAuthUrl({
-    access_type: 'offline', // 'online' (default) or 'offline' (gets refresh_token)
-    scope: scopes // If you only need one scope you can pass it as string
-});
-
-
-
-// var googleapis = require('googleapis');
-var googleAuth = require('google-auth-library');
-var fs = require('fs');
-
-var googleapis = require('googleapis'),
-    JWT = googleapis.auth.JWT,
-    analytics = googleapis.analytics('v3');
-
-var SERVICE_ACCOUNT_EMAIL = process.env.SERVICE_ACCOUNT_EMAIL;
-var SERVICE_ACCOUNT_KEY_FILE = __dirname + '/client_secret.json';
-
-var authClient = new JWT(
-    SERVICE_ACCOUNT_EMAIL,
-    SERVICE_ACCOUNT_KEY_FILE,
-    null, ['https://www.googleapis.com/auth/analytics.readonly']
-);
-
-var port = process.env.PORT || 4000
-var MONGODBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/outfitforme'
 
 mongoose.connect(MONGODBURI);
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(methodOverride('_method'));
 
-// app.use(session({
-//     cookieName: 'session',
-//     secret: 'beagle',
-//     resave: false,
-//     saveUninitialized: true
-// }));
-
-
-
-
-// console.log(session);
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -124,7 +65,6 @@ app.post('/userlogin', function(req, res) {
     });
 
 });
-
 // end login route
 
 
@@ -135,8 +75,6 @@ app.get('/logout', function(req, res) {
 
 });
 // end USER LOGOUT DESTROY SESSION
-
-
 
 
 // REQ.SESSION.USERNAME CHECKER
@@ -150,9 +88,10 @@ app.get('/sessionchecker', function(req, res) {
         });
     }
 });
+// end session checker
 
 
-
+// GETS THE FORECAST FROM DARKSKIES
 app.get('/forecast', function(req, res) {
     var ForecastIO = require('forecast-io')
     var forecast = new ForecastIO(process.env.DARKSKY)
@@ -172,7 +111,6 @@ app.get('/forecast', function(req, res) {
         .catch(err => { // handle your error response.
             console.log(err)
         })
-
 });
 
 
@@ -183,10 +121,6 @@ app.get('/forecast/:id', function(req, res) {
 
     var ForecastIO = require('forecast-io')
     var forecast = new ForecastIO(process.env.DARKSKY)
-
-    // httpRequest.get('https://api.gilt.com/v1/products?q=summer+dress&store=women&apikey=4f98486dc17f0323eb0a1c474784cfa025625669f94b331998e68fe6b82bd987', function(res){
-    // console.log( res );
-    // });
 
     forecast
         .latitude(location.latitude.toString()) //required: latitude, string.
@@ -206,15 +140,17 @@ app.get('/forecast/:id', function(req, res) {
             console.log(err)
         })
 
-
-
-
 });
+// end forecast from DarkSkies
 
 
+
+
+//**** ADMIN ROUTES ****//
+
+//GETS THE CLOTHING SELECTION AVAILABLE IN THE DATABASE
 app.get('/clothing', function(req, res) {
     Clothing.find(function(err, data) {
-        // console.log(data);
         res.send(data)
     });
 })
@@ -224,9 +160,7 @@ app.get('/clothing', function(req, res) {
 app.post('/clothingAdd', function(req, res) {
     Clothing.create(req.body, function(err, data) {
         res.redirect("/")
-
     })
-
 });
 // end create clothing
 
@@ -242,9 +176,6 @@ app.post('/usersignup', function(req, res) {
     })
 });
 // end create user
-
-
-
 
 
 // DELETES THE CLOTHING
