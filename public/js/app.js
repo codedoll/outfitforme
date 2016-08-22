@@ -155,7 +155,6 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
     //Tells the user if their outfit is weather appropriate
     this.callDark = function(apparentTemperature, selected) {
-        console.log(selected.value.keywords)
         var mindif = apparentTemperature - selected.value.tempmin;
         if (mindif > 5) {
             self.resultDisplay = "Just right!"
