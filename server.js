@@ -13,10 +13,11 @@ var _ = require('lodash');
 var httpRequest = require('fd-http-request');
 var app = express();
 
-
+// CONTROLLERS
 var Clothing = require('./models/clothing_model.js');
 var User = require('./models/user_model.js');
 
+// PORT & MONGODB
 var port = process.env.PORT || 9000
 var MONGODBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/outfitforme'
 
@@ -81,10 +82,8 @@ app.get('/logout', function(req, res) {
 
 // REQ.SESSION.USERNAME CHECKER
 app.get('/sessionchecker', function(req, res) {
-    // console.log(session);
     if (req.session && req.session.user) {
         User.findOne({ "username": req.session.username }, function(err, user) {
-            // console.log(user);
             res.locals.user = user;
             res.send(user.username)
         });
@@ -150,6 +149,18 @@ app.get('/forecast/:id', function(req, res) {
 
 //**** ADMIN ROUTES ****//
 
+// SHOW ADMIN PAGE
+app.get('/admin', function(req, res) {
+    // if (req.session.username == "Lyn") {
+        res.sendFile(path.resolve(__dirname + '/public/admin.html'));
+    // } else {
+        // res.redirect('/')
+    // }
+
+});
+// end admin page
+
+
 //GETS THE CLOTHING SELECTION AVAILABLE IN THE DATABASE
 app.get('/clothing', function(req, res) {
     Clothing.find(function(err, data) {
@@ -187,6 +198,7 @@ app.delete('/clothingDelete', function(req, res) {
     })
 });
 // end delete clothing
+
 
 
 // EDIT EXISTING CLOTHING

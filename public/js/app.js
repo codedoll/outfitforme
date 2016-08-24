@@ -10,11 +10,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         templateUrl: 'partial/home.html',
         controller: 'MainController',
         controllerAs: 'mctrl'
-    }).when('/admin', {
-        templateUrl: 'admin.html',
-        controller: 'MainController',
-        controllerAs: 'mctrl'
-    }).when('/adminform', {
+    })
+    .when('/adminform', {
         templateUrl: 'partial/admin_form.html',
         controller: 'MainController',
         controllerAs: 'mctrl'
@@ -75,7 +72,6 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             url: '/sessionchecker',
             method: 'GET'
         }).then(function(response) {
-            console.log(response.data);
             self.usernameLogged = response.data;
         })
     };
