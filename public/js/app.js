@@ -28,6 +28,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
     $scope.dataLoaded = true;
 
+
     //GET ALL CLOTHING VALUES IN DB
     $scope.adminLoad = function() {
         $scope.dataLoaded = false;
@@ -42,10 +43,11 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             console.log(clothingDbData.data);
             self.clothingDbData = clothingDbData.data;
         });
-        //END adminLoad function
     };
+    //END adminLoad function
 
 
+    //DELETE CLOTHING
     this.deleteClothing = function(clothing) {
         $http({
             method: 'DELETE',
@@ -60,8 +62,10 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
         $route.reload();
     }
+    //END deleteClothing function
 
 
+    //CHECKS IF USER IS LOGGED IN
     this.sessionchecker = function() {
         $http({
             url: '/sessionchecker',
@@ -72,9 +76,10 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
     };
 
     this.sessionchecker();
+    // end sessionchecker
 
 
-    //LOGIN FORM
+    // LOGIN FORM
     this.userlogin = function(login) {
         console.log(login);
         $http({
@@ -89,9 +94,10 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             console.log(self.usernameLogged);
         });
     }
+    // END userlogin function
 
 
-    //LOGOUT BUTTON
+    // LOGOUT BUTTON
     this.logout = function() {
         $http({
             method: 'GET',
@@ -99,12 +105,12 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
         })
         $route.reload;
     }
-
+    // END logout function
 
 
     var currentIcon;
 
-    //CALLS FORECAST
+    // CALLS FORECAST
     this.forecast = function(userLocation) {
         // console.log($scope.selected);
         // console.log(userLocation);
@@ -112,7 +118,6 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             url: '/forecast/' + userLocation.zipcode,
             method: 'GET',
         }).then(function(data) {
-            // console.log(data.data);
 
             self.darksky = data.data;
 
@@ -141,10 +146,10 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             self.callDark(data.data.currently.apparentTemperature, $scope.selected)
         })
     };
+    // END forecast function
 
 
-
-    //Tells the user if their outfit is weather appropriate
+    // Tells the user if their outfit is weather appropriate
     this.callDark = function(apparentTemperature, selected) {
         var mindif = apparentTemperature - selected.value.tempmin;
         if (mindif > 5) {
@@ -152,9 +157,10 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             self.gilt(selected)
         }
     };
+    // END callDark function
 
 
-    //Gets the selection from dropdown
+    // Gets the selection from dropdown
     $scope.clothingSelectLoad = function() {
         $http({
             url: '/clothing',
@@ -169,7 +175,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
     // END clothingSelectLoad 
 
 
-    //Calls clothing json from GILT based on keywords
+    // Calls clothing json from GILT based on keywords
     this.gilt = function(selected) {
         $scope.dataLoaded = false;
 
@@ -186,6 +192,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             $scope.giltSuggestImg = $scope.giltSuggest.image_urls["420x560"][0].url;
         })
     };
+    // END gilt function
 
 
     // MODAL for EDIT CLOTHING
@@ -211,8 +218,6 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
         }).then(function(result) {
             // $scope.closeThisDialog();
             // $location.path('/admin')
-
         });
     }
-
 }]); // end MainController
