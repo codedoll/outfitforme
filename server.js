@@ -17,6 +17,8 @@ var app = express();
 var Clothing = require('./models/clothing_model.js');
 var User = require('./models/user_model.js');
 
+var port = process.env.PORT || 9000
+var MONGODBURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/outfitforme'
 
 app.use(session({
     cookieName: 'session',
