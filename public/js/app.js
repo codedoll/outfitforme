@@ -1,6 +1,7 @@
 var app = angular.module('OutfitForMe', ['ngRoute', 'angularMoment', 'ngRoute', 'ui.select', 'ngSanitize', 'ngDialog']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
@@ -16,12 +17,14 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         controller: 'MainController',
         controllerAs: 'mctrl'
     })
+    
 }])
 
 
 app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', 'ngDialog', function($http, $scope, $routeParams, $route, ngDialog) {
 
     var self = this;
+
     var usernameLogged = "GUEST";
 
     self.sessionID = "GUEST";
@@ -37,10 +40,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             url: '/clothing',
             method: 'GET',
         }).then(function(clothingDbData) {
-
             $scope.dataLoaded = true;
-
-            console.log(clothingDbData.data);
             self.clothingDbData = clothingDbData.data;
         });
     };
@@ -81,7 +81,6 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
     // LOGIN FORM
     this.userlogin = function(login) {
-        console.log(login);
         $http({
             method: 'POST',
             url: '/userlogin',
@@ -112,8 +111,6 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
 
     // CALLS FORECAST
     this.forecast = function(userLocation) {
-        // console.log($scope.selected);
-        // console.log(userLocation);
         $http({
             url: '/forecast/' + userLocation.zipcode,
             method: 'GET',
@@ -166,10 +163,8 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             url: '/clothing',
             method: 'GET',
         }).then(function(clothingDbData) {
-            // console.log(clothingDbData.data);
             $scope.itemArray = clothingDbData.data;
             $scope.selected = {};
-            // console.log($scope.selected);
         });
     };
     // END clothingSelectLoad 
@@ -185,7 +180,6 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
         }).then(function(data) {
             $scope.dataLoaded = true;
 
-            // console.log(data.data.products.length);
             var giltReturn = data.data.products.length + 1;
             var randOutfit = Math.floor(Math.random() * giltReturn);
             $scope.giltSuggest = data.data.products[randOutfit]
@@ -205,7 +199,7 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
                 scope: $scope
             });
         }
-        // end MODAL for EDIT CLOTHING
+        // END editClothingModal function
 
 
     // EDIT EXISTING CLOTHING FROM ADMIN //
@@ -220,4 +214,8 @@ app.controller('MainController', ['$http', '$scope', '$routeParams', '$route', '
             // $location.path('/admin')
         });
     }
-}]); // end MainController
+    // END editclothing function
+
+
+}]); 
+// end MainController
