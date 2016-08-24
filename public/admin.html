@@ -26,7 +26,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.2/css/ngDialog-theme-plain.css">
 </head>
 
-<body ng-controller="MainController as mctrl">
+<body ng-controller="MainController as mctrl" ng-init="adminLoad()">
     <header>
         <div class="navigation">
             <div class="navdiv" id="siteTitle">
@@ -37,8 +37,7 @@
             <div class="navdiv">
             </div>
     </header>
-    <div ng-init="adminLoad()"></div>
-
+      
     <form action="/clothingAdd" method="POST">
         <input type="text" name="name" placeholder="clothing name" />
         <br>
