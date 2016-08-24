@@ -49,18 +49,12 @@ app.post('/userlogin', function(req, res) {
             // sets a cookie with the user's info
 
             if (bcrypt.compareSync(req.body.password, user.password)) {
-                console.log("Login success");
-                // console.log(session);
                 req.session.user = user
                 req.session.username = user.username
-
                 res.send({
                     sessionID: req.session.username
                 });
-
             } else {
-                console.log("wrong password");
-                // console.log(user);
                 res.send("wrong password")
             }
 
@@ -73,8 +67,8 @@ app.post('/userlogin', function(req, res) {
 
 // USER LOGOUT DESTROY SESSION
 app.get('/logout', function(req, res) {
-  req.session.reset();
-  res.redirect('/');
+    req.session.reset();
+    res.redirect('/');
 
 });
 // end USER LOGOUT DESTROY SESSION
@@ -151,12 +145,7 @@ app.get('/forecast/:id', function(req, res) {
 
 // SHOW ADMIN PAGE
 app.get('/admin', function(req, res) {
-    // if (req.session.username == "Lyn") {
-        res.sendFile(path.resolve(__dirname + '/public/admin.html'));
-    // } else {
-        // res.redirect('/')
-    // }
-
+    res.sendFile(path.resolve(__dirname + '/public/admin.html'));
 });
 // end admin page
 
@@ -203,9 +192,7 @@ app.delete('/clothingDelete', function(req, res) {
 
 // EDIT EXISTING CLOTHING
 app.put('/edit/:id', function(req, res) {
-    console.log(req.body);
     Clothing.findByIdAndUpdate(req.params.id, req.body, function(err, clothing) {
-        console.log(clothing);
         res.send(clothing);
     });
 });
